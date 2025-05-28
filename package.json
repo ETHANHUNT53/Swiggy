@@ -1,0 +1,22 @@
+{
+  "name": "react-01",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "jest",
+    "start": "parcel index.html"
+  },
+  "keywords": [
+    "react"
+  ],
+  "author": "Shaurya Jaiswal",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "parcel": "^2.15.1"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-01": "file:",
+    "react-dom": "^19.1.0"
+  }
+}
