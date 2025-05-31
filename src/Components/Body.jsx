@@ -1,5 +1,7 @@
 import RestaurantCard from "./RestaurantCard";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { RES_API } from "../utils/constants";
 
 const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
@@ -11,9 +13,7 @@ const Body = () => {
   }, []);
 
   const fetchData = async () => {
-    const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=25.468338&lng=81.85460189999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-    );
+    const data = await fetch(RES_API);
     const json = await data.json();
     console.log(json);
     setListOfRestaurants(
@@ -57,7 +57,7 @@ const Body = () => {
             const filteredList = listOfRestaurants.filter(
               (res) => res?.info?.avgRating > 4.5
             );
-            setListOfRestaurants(filteredList);
+            setFilteredRestaurants(filteredList);
           }}
         >
           Top Rated Restaurants
@@ -65,7 +65,13 @@ const Body = () => {
       </div>
       <div className="res-container">
         {filteredRestaurants.map((res) => (
-          <RestaurantCard key={res?.info?.id} resData={res} />
+          <Link
+            to={"/restaurant/" + res?.info?.id}
+            key={res?.info?.id}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <RestaurantCard resData={res} />
+          </Link>
         ))}
       </div>
     </div>
