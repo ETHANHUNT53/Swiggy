@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { MENU_API } from "../utils/constants";
+import useRestaurantMenu from "../hooks/useRestaurantMenu";
+import RestaurantCategory from "./RestaurantCategory";
 const RestaurantMenu = () => {
-  const [resInfo, setResInfo] = useState(null);
+  //   const [resInfo, setResInfo] = useState(null);
   const params = useParams();
-  console.log(params);
+  //   console.log(params);
 
-  useEffect(() => {
-    fetchMenu();
-  }, []);
+  //   useEffect(() => {
+  //     fetchMenu();
+  //   }, []);
 
-  const fetchMenu = async () => {
-    const data = await fetch(MENU_API + params.resId);
-    const json = await data.json();
-    setResInfo(json.data);
-    // console.log(json);
-  };
-
+  //   const fetchMenu = async () => {
+  //     const data = await fetch(MENU_API + params.resId);
+  //     const json = await data.json();
+  //     setResInfo(json.data);
+  //     // console.log(json);
+  //   };
+  const resInfo = useRestaurantMenu(params.resId);
   if (resInfo === null) {
     return (
       <div className="loader-wrapper">
@@ -32,21 +34,33 @@ const RestaurantMenu = () => {
 
   const menuCard = menuCards.find((c) => c?.card?.card?.itemCards);
 
+  const categories = menuCards.filter(
+    (c) =>
+      c.card?.card?.["@type"] ===
+      "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+  );
+  // console.log("categories" + categories);
   const itemCards = menuCard?.card?.card?.itemCards || [];
-  //   console.log(resInfo.cards[4]);
+  console.log(menuCards);
+  // console.log(resInfo);
   return (
-    <div className="res-menu">
-      <h2>{name}</h2>
-      <h3>
-        {cuisines} - {costForTwoMessage}
-      </h3>
-      <h2>Menu</h2>
+    <div className="res-menu border border-black">
+      <div className="flex justify-center">
+        <h2 className="font-bold text-2xl">{name}</h2>
+      </div>
+      <div className="flex justify-center">
+        <h3 className="font-semibold">
+          {cuisines} - {costForTwoMessage}
+        </h3>
+      </div>
+      <div className="flex justify-center">
+        <h2 className="text-3xl my-4 font-semibold">Menu</h2>
+      </div>
       <ul>
-        {itemCards.map((item) => (
-          <li key={item?.card?.info?.id}>
-            {item?.card?.info?.name} - Rs.
-            {item?.card?.info?.defaultPrice / 100 ||
-              item?.card?.info?.price / 100}
+        {categories.map((category) => (
+          // <li key={item?.card?.info?.id}>
+          <li className="my-4 mx-80  " key={category.card?.card?.title}>
+            <RestaurantCategory data={category.card?.card} />
           </li>
         ))}
       </ul>
