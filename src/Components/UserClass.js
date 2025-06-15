@@ -3,7 +3,7 @@ import React from "react";
 class UserClass extends React.Component {
   constructor(props) {
     super(props);
-    console.log(this.props.name + " constructor");
+    // console.log(this.props.name + " constructor");
     this.state = {
       count: 0,
       userInfo: {
@@ -13,7 +13,7 @@ class UserClass extends React.Component {
     };
   }
   async componentDidMount() {
-    console.log(this.props.name + " component did mount");
+    // console.log(this.props.name + " component did mount");
     const data = await fetch("https://api.github.com/users/ethanhunt53");
     const json = await data.json();
 
@@ -23,12 +23,12 @@ class UserClass extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log("component did update");
+    // console.log("component did update");
   }
   render() {
     const { login, location, avatar_url } = this.state.userInfo;
     const { count } = this.state;
-    console.log(this.props.name + " render");
+    // console.log(this.props.name + " render");
     return (
       <div>
         <h3>Name: {login}</h3>

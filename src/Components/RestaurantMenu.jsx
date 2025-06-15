@@ -4,21 +4,9 @@ import { MENU_API } from "../utils/constants";
 import useRestaurantMenu from "../hooks/useRestaurantMenu";
 import RestaurantCategory from "./RestaurantCategory";
 const RestaurantMenu = () => {
-  //   const [resInfo, setResInfo] = useState(null);
   const params = useParams();
-  //   console.log(params);
-
-  //   useEffect(() => {
-  //     fetchMenu();
-  //   }, []);
-
-  //   const fetchMenu = async () => {
-  //     const data = await fetch(MENU_API + params.resId);
-  //     const json = await data.json();
-  //     setResInfo(json.data);
-  //     // console.log(json);
-  //   };
   const resInfo = useRestaurantMenu(params.resId);
+  const [showIndex, setShowIndex] = useState(null);
   if (resInfo === null) {
     return (
       <div className="loader-wrapper">
@@ -57,10 +45,16 @@ const RestaurantMenu = () => {
         <h2 className="text-3xl my-4 font-semibold">Menu</h2>
       </div>
       <ul>
-        {categories.map((category) => (
+        {categories.map((category, index) => (
           // <li key={item?.card?.info?.id}>
           <li className="my-4 mx-80  " key={category.card?.card?.title}>
-            <RestaurantCategory data={category.card?.card} />
+            <RestaurantCategory
+              data={category.card?.card}
+              showItems={index === showIndex ? true : false}
+              setShowIndex={() =>
+                setShowIndex(index === showIndex ? null : index)
+              }
+            />
           </li>
         ))}
       </ul>
