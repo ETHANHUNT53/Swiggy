@@ -29,7 +29,7 @@ const RestaurantMenu = () => {
   );
   // console.log("categories" + categories);
   const itemCards = menuCard?.card?.card?.itemCards || [];
-  console.log(menuCards);
+  // console.log(menuCards);
   // console.log(resInfo);
   return (
     <div className="res-menu border border-black">

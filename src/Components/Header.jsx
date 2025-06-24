@@ -2,9 +2,10 @@ import { useContext } from "react";
 import { LOGO_URL } from "../utils/constants";
 import { Link } from "react-router-dom";
 import UserContext from "../utils/UserContext";
+import { useSelector } from "react-redux";
 const Header = () => {
   const { loggedInUser } = useContext(UserContext);
-  console.log(loggedInUser);
+  const cartItems = useSelector((store)=>store.cart.items);
   return (
     <div className="head-container flex justify-between border-gray-500">
       <img className="logo w-36" src={LOGO_URL}></img>
@@ -38,7 +39,13 @@ const Header = () => {
             Instamart
           </Link>
         </li>
-        <li className="px-4">Cart</li>
+        <li className="px-4 font-bold transition delay-100 duration-300 ease-in-out hover:translate-y-1  hover:font-semibold hover:scale-110 cursor-pointer">
+          <Link 
+          to = {'/cart'}
+          >
+            Cart - ({cartItems.length})
+            </Link>
+          </li>
         <li className="font-bold ">{loggedInUser}</li>
       </ul>
     </div>
